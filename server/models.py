@@ -3,3 +3,6 @@ class User():
 
 class Farmer():
     pass
+
+class Admin():
+    pass
