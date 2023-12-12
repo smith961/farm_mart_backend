@@ -4,7 +4,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 from server.config import db, app, bcrypt
 
-class User(db.Model):
+class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
     user_id = db.Column('user_id', db.Integer, primary_key=True, autoincrement= True)
@@ -18,7 +18,7 @@ class User(db.Model):
     def user_password(self):
         raise AttributeError('Password hashes may not be viewed.')
     
-    @password_hash.setter
+    @user_password.setter
     def user_password(self, password):
         user_password = bcrypt.generate_password_hash(
             password.encode('utf-8'))
