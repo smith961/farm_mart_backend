@@ -4,6 +4,7 @@ from server.config import db, app
 from models.user import User
 
 
+
 class User_Info(db.Model):
     __tablename__ = 'users_info'
 
