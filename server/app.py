@@ -3,7 +3,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, User_Info, Admin, Farmer,
+from models import User, User_Info, Admin, Farmer
 
 class Signup(Resource):
     def post(self):
@@ -18,7 +18,7 @@ class Signup(Resource):
                             user_last_name = user_last_name,
                             user_email = user_email
                             )
-            new_user.user_password = password
+            new_user.user_password = user_password
 
             db.session.add(new_user)
             db.session.commit()
@@ -43,12 +43,12 @@ class Login(Resource):
         user_password = request.get_json()['user_password']
 
         user = User.query.filter(User.user_email == user_email).first()
-        if user and user.authenticate(password):
+        if user and user.authenticate(user_password):
             session['user_id'] = user.id
             return user.to_dict(), 200
         else:
             return {'error': '401 Unauthorized'}, 401
-    pass
+    
 
 class Logout(Resource):
     def delete(self):
