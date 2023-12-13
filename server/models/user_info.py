@@ -1,7 +1,7 @@
 import datetime
 import base64
 from server.config import db, app
-from models.user import User
+from models.auth import User
 
 
 

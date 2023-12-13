@@ -8,8 +8,9 @@ from sqlalchemy import MetaData
 app = Flask(__name__)
 app.secret_key = 'secret key'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///farmmart.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
-app.json.compact = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+# app.json.compact = False
 
 metadata = MetaData(naming_convention={
     "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",

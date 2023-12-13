@@ -11,12 +11,14 @@ class Signup(Resource):
         user_last_name = request.get_json().get('user_last_name')
         user_email =  request.get_json().get(' user_email')
         user_password = request.get_json().get('user_password')
-        user_phone_number =  request.get_json().get('user_phone_number')
+        user_phone_number = request.get_json().get('user_phone_number')
+        
 
         if user_email and user_password :
             new_user = User(user_first_name=user_first_name,
                             user_last_name = user_last_name,
-                            user_email = user_email
+                            user_email = user_email,
+                            user_phone_number = user_phone_number
                             )
             new_user.user_password = user_password
 
@@ -68,3 +70,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(AnimalIndex, '/animals', endpoint='animals')
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
