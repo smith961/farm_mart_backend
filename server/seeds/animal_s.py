@@ -13,6 +13,21 @@ class TypeOfAnimals():
         types = TypeOfAnimal.query.all()
         return [types.as_dict() for type in types]
     
+    def get_types_for_headers(self):
+        types = db.session.query(TypeOfAnimals).all()
+        types_data = []
+        for type in types:
+            data_dict = {}
+            data_dict['typeName'] = type.name
+            breedofanimals= BreedofAnimal.query.filter_by(type_id = type.type_id).all()
+            breedofanimals_data = []
+            for breed in breedofanimals:
+                breedofanimals_data.append(breed.breed_name)
+            data_dict['breedOfAnimals'] = breedofanimals_data
+            types_data.append(data_dict)
+        return types_data
+
+    
 class BreedOfAnimals():
     def get_breed_Id_based_breed(self, breed_name):
         breed = BreedofAnimal.query.filter_by(breed_name=breed_name).first()
@@ -48,4 +63,11 @@ class Animals():
     def get_single_animal(self, animal_id):
         animal = db.session.query(Animal, TypeOfAnimal, BreedofAnimal, AnimalInventory).join(
             TypeOfAnimal, Animal.breed_id == TypeOfAnimal.type_id
-        ).join()    
+        ).join(BreedofAnimal, Animal.breed_id == BreedofAnimal.breed_id).join(
+            AnimalInventory, Animal.inventory_id == AnimalInventory.inventory_id
+        ).filter(Animal.animal_id == animal_id).first()
+
+        data_dict = {}
+        for livestock in animal:
+            data_dict.update(livestock.as_dict())
+        return data_dict    

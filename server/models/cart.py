@@ -50,7 +50,7 @@ class Cart(db.Model):
         return {
             'cartId': self.cart_id,
             'quantity': self.quantity,
-            'productId': self.animal_id
+            'animalId': self.animal_id
         }
     
     with app.app_context():

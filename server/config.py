@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.secret_key = 'secret key'
@@ -23,3 +24,5 @@ db.init_app(app)
 bcrypt = Bcrypt(app)
 
 api = Api(app)
+
+jwt = JWTManager(app)
