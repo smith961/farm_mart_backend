@@ -67,14 +67,6 @@ class AcessToken(Resource):
         return make_response({"msg": "User doesn't exists"}, 401)
 
 
-
-
-
-
-
-
-
-
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AcessToken, '/get-access-token', endpoint='get-access-token')

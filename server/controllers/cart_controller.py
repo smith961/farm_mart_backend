@@ -33,4 +33,6 @@ class User_Cart(Resource):
                return make_response({'cart': res, 'msg': 'Product added in cart'}, 201)
             except Exception as e:
                print(e)
-               return make_response({'msg':'Something went wron'}, 400)
+               return make_response({'msg':'Something went wrong'}, 400)
+            
+api.add_resource(User_Cart,'/cart', endpoint='/cart')
