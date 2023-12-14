@@ -10,7 +10,7 @@ class Home(Resource):
         return make_response({"msg": "Welcome to Farmmart"}, 200)
     
 class BreedsIndex(Resource):
-    @jwt_required
+    @jwt_required()
     def header_types_of_animals():
         types_of_animals = TypeOfAnimals()
         try:

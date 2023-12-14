@@ -7,7 +7,7 @@ from server.models.cart import OrderDetail, OrderItem, Cart
 
 
 class User_Cart(Resource):
-    @jwt_required
+    @jwt_required()
     def get_cart_by_user():
         user_id = get_jwt_identity().get('userId')
         cart_s = Carts()
