@@ -5,7 +5,7 @@ from models.animal import Animal, TypeOfAnimal, BreedofAnimal,AnimalInventory
 from models.user_info import User_Info, User
 
 class TypeOfAnimals():
-    def get_animal_id_based_type(self, type_name):
+    def get_type_id_based_type(self, type_name):
         type = TypeOfAnimal.query.filter_by(type_name=type_name).first()
         return type.type_id
     
