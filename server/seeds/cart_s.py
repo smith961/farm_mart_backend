@@ -7,9 +7,9 @@ from models.animal import Animal, BreedofAnimal
 class Carts():
     def get_user_cart(self, user_id):
         cart = db.session.query(Cart, Animal, BreedofAnimal).join(
-            Animal, Cart.animal_id == Animal.animal_id
+            Animal, Cart.animal_id == Animal.id
         ).join(
-            BreedofAnimal, Animal.breed_id == BreedofAnimal.breed_id
+            BreedofAnimal, Animal.breed_id == BreedofAnimal.id
         ).filter(Cart.user_id == user_id).all()
         data = []
         for livestock in cart:
@@ -30,9 +30,9 @@ class Carts():
         )
         db.session.add(cart_obj)
         cart = db.session.query(Cart, Animal, BreedofAnimal).join(
-            Animal, Cart.animal_id == Animal.animal_id
+            Animal, Cart.animal_id == Animal.id
         ).join(
-            BreedofAnimal, Animal.breed_id == BreedofAnimal.breed_id
+            BreedofAnimal, Animal.breed_id == BreedofAnimal.id
         ).filter(Cart.user_id == user_id, Cart.animal_id == animal_id).all()
 
         if len(cart) > 1:

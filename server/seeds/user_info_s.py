@@ -13,19 +13,19 @@ class UserInfos():
     def add_user_profile(self, user_id, first_name, last_name,
                          phone_number,email):
         updation = User_Info.query.filter_by(user_id=user_id).update({
-            User_Info.user_first_name:first_name,
-            User_Info.user_last_name:last_name,
-            User_Info.user_phone_number:phone_number,
-            User_Info.user_email:email,
+            User_Info.first_name:first_name,
+            User_Info.last_name:last_name,
+            User_Info.phone_number:phone_number,
+            User_Info.email:email,
             User_Info.user_id:user_id,
             User_Info.updated_at: datetime.datetime.utcnow()
          })
         if updation == 0:
             user_info = User_Info(
-                user_first_name = first_name,
-                user_last_name = last_name,
-                user_phone_number = phone_number,
-                user_email = email,
+                first_name = first_name,
+                last_name = last_name,
+                phone_number = phone_number,
+                email = email,
                 user_id = user_id,
                 created_at = datetime.datetime.utcnow(),
                 updated_at = datetime.datetime.utcnow()

@@ -8,7 +8,7 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.secret_key = 'secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///farmmart.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 # app.json.compact = False

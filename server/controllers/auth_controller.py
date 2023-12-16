@@ -8,19 +8,19 @@ from server.models.auth import User
 
 class Signup(Resource):
     def post(self):
-        user_email = request.json.get('user_email')
-        user_password = request.json.get('user_password')
+        email = request.json.get('email')
+        password = request.json.get('password')
     
-        if not user_email or not user_password:
+        if not email or not password:
          return make_response({"msg": "Invalid data"}, 400)
         else:
             user_s = Users()
             user = User()
-            user.user_email = user_email
-            user._user_password = generate_password_hash(user_password)
+            user.email = email
+            user._password = generate_password_hash(password)
 
         try:
-            existing_user = user_s.get_single_user(user_email)
+            existing_user = user_s.get_single_user(email)
             user_s.add_user(user)
             return  make_response({"msg": "Successfully added"}, 201)
         except Exception as e:
@@ -29,28 +29,28 @@ class Signup(Resource):
 
 class Login(Resource):
     def post(self):
-        user_email = request.json.get('user_email')
-        user_password = request.json.get('user_password')
+        email = request.json.get('email')
+        password = request.json.get('password')
 
-        if not user_email or not user_password:
+        if not email or not password:
             return make_response({"msg": "Invalid data"}, 400)
     
         else:
             user_s = Users()
 
-        existing_user = user_s.get_single_user(user_email)
+        existing_user = user_s.get_single_user(email)
         if not existing_user == None:
             isPasswordTrue = check_password_hash(
-                existing_user._user_password, user_password)
+                existing_user._password, password)
             if isPasswordTrue:
                 access_token = create_access_token(
-                    identity={"email": user_email, "userId": existing_user.user_id}
+                    identity={"email": email, "userId": existing_user.id}
                 )
                 refresh_token = create_refresh_token(
-                    identity={"email": user_email, "userId": existing_user.user_id}
+                    identity={"email": email, "userId": existing_user.id}
                 )
 
-                return make_response({"accessToken": access_token, "refreshToken": refresh_token, "user": {"email": existing_user.user_email,"user_id": existing_user.user_id}}, 201)
+                return make_response({"accessToken": access_token, "refreshToken": refresh_token, "user": {"email": existing_user.email,"user_id": existing_user.id}}, 201)
             else:
                  return make_response({"msg": "User doesn't exists"}, 400)
             

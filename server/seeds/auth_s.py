@@ -9,12 +9,12 @@ class Users():
         db.session.commit()
     
     def get_single_user(self, user_email):
-        user_object = User.query.filter_by(user_email = user_email).first()
+        user_object = User.query.filter_by(email = user_email).first()
         return user_object
     
     def update_password_with_user(self, user_id, user_new_password):
-        updation = User.query.filter_by(user_id = user_id).update({
-            User._user_password: bcrypt.generate_password_hash(user_new_password),
+        updation = User.query.filter_by(id = user_id).update({
+            User._password: bcrypt.generate_password_hash(user_new_password),
             User.updated_at: datetime.datetime.utcnow()
         })
         db.session.commit()
