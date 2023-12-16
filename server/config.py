@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
@@ -8,8 +9,7 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.secret_key = 'secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 # app.json.compact = False
 
