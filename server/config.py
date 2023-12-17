@@ -10,7 +10,7 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.secret_key = 'secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///fam.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 
@@ -20,6 +20,7 @@ metadata = MetaData(naming_convention={
 db = SQLAlchemy(metadata=metadata)
 
 migrate = Migrate(app, db)
+
 db.init_app(app)
 
 bcrypt = Bcrypt(app)
