@@ -13,7 +13,7 @@ from seeds.animal_s import Animals, TypeOfAnimals, BreedOfAnimals, Users,Carts, 
 
 class AnimalProduce(Resource):
     @jwt_required()
-    def get_animals():
+    def get():
         animal_s = Animals()
         type = request.args.get('type')
         breed = request.args.get('breed')
@@ -43,7 +43,7 @@ class AnimalProduce(Resource):
 
 class AnimalProducById(Resource):
     @jwt_required()
-    def get_one_animal(id):
+    def get(id):
         animal_s = Animals()
         try:
             data = animal_s.get_single_animal(id)
@@ -57,7 +57,7 @@ class AnimalProducById(Resource):
 
 class AllTypesOfAnimal(Resource):
     @jwt_required()
-    def get_all_types():
+    def get():
         animal_type = TypeOfAnimals()
         data = animal_type.get_all_types()
         if len(data) !=0:
@@ -67,7 +67,7 @@ class AllTypesOfAnimal(Resource):
 
 class AllBreedOfAnimal():
     @jwt_required()
-    def get_breed_of_animal():
+    def get():
         animal_type = TypeOfAnimals()
         type = request.args.get('type')
         if not type:
@@ -131,7 +131,7 @@ class Login(Resource):
 
 class AcessToken(Resource):
     @jwt_required(refresh = True)
-    def get_access_token():
+    def get():
         user_s = Users()
         identity = get_jwt_identity()
         user = user_s.get_single_user(identity.get('user_email'))
@@ -142,7 +142,7 @@ class AcessToken(Resource):
 
 class User_Cart(Resource):
     @jwt_required()
-    def get_cart_by_user():
+    def get():
         user_id = get_jwt_identity().get('userId')
         cart_s = Carts()
 
@@ -170,12 +170,12 @@ class User_Cart(Resource):
                return make_response({'msg':'Something went wrong'}, 400)
 
 class Home(Resource):
-    def get_home_page():
+    def get(self):
         return make_response({"msg": "Welcome to Farmmart"}, 200)
     
 class BreedsIndex(Resource):
     @jwt_required()
-    def header_types_of_animals():
+    def get():
         types_of_animals = TypeOfAnimals()
         try:
             types = types_of_animals.get_types_for_headers()
@@ -208,8 +208,8 @@ class User_Profile(Resource):
 
                 user_info_s.add_user_profile(user_id, first_name, last_name, phone_number,email )
                 return make_response({"msg": "Profile successfully added"}, 201)
-            # except sqlalchemy.exc.IntegrityError as e:
-            #     return make_response({"msg": "Your profile already added"}, 400)
+            except sqlalchemy.exc.IntegrityError as e:
+                return make_response({"msg": "Your profile already added"}, 400)
             except Exception as e:
                 return make_response({"msg": "Something went wrong, try again"}, 400)
             
