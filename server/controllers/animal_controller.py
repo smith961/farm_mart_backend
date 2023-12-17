@@ -99,7 +99,17 @@ class Signup(Resource):
             return  make_response({"msg": "Successfully added"}, 201)
         except Exception as e:
             return make_response({"msg": "Email already exists"}, 400)
-        
+
+class AcessToken(Resource):
+    @jwt_required(refresh = True)
+    def get(self):
+        user_s = Users()
+        identity = get_jwt_identity()
+        user = user_s.get_single_user(identity.get('user_email'))
+        if user:
+            access_token = create_access_token(identity=identity)
+            return make_response({"accessToken": access_token, "user": identity}, 201)
+        return make_response({"msg": "User doesn't exists"}, 401)       
 
 class Login(Resource):
     def post(self):
@@ -128,18 +138,6 @@ class Login(Resource):
             else:
                  return make_response({"msg": "User doesn't exists"}, 400)
             
-
-class AcessToken(Resource):
-    @jwt_required(refresh = True)
-    def get():
-        user_s = Users()
-        identity = get_jwt_identity()
-        user = user_s.get_single_user(identity.get('user_email'))
-        if user:
-            access_token = create_access_token(identity=identity)
-            return make_response({"accessToken": access_token, "user": identity}, 201)
-        return make_response({"msg": "User doesn't exists"}, 401)
-
 class User_Cart(Resource):
     @jwt_required()
     def get():
@@ -213,7 +211,6 @@ class User_Profile(Resource):
             except Exception as e:
                 return make_response({"msg": "Something went wrong, try again"}, 400)
             
-
 class UpdatePassword(Resource):
     @jwt_required()
     def user_update_password():
