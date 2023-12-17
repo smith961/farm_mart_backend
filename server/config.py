@@ -11,7 +11,6 @@ metadata = MetaData(naming_convention={
         "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
     })
     
-
 db = SQLAlchemy(metadata=metadata)
 app = Flask(__name__)
 api = Api(app)
@@ -26,9 +25,29 @@ db.init_app(app)
 
 bcrypt = Bcrypt(app)
 
-    
+        
 
 jwt = JWTManager(app)
 
+
+
 def create_app():
+    db = SQLAlchemy(metadata=metadata)
+    app = Flask(__name__)
+    api = Api(app)
+
+    app.secret_key = 'secret key'
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
+    app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
+
+    migrate = Migrate(app, db)
+
+    db.init_app(app)
+
+    bcrypt = Bcrypt(app)
+
+        
+
+    jwt = JWTManager(app)
+
     return app
