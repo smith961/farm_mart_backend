@@ -5,7 +5,7 @@ from flask_bcrypt import generate_password_hash, check_password_hash
 import sqlalchemy
 from config import app, api
 from models.animal import Animal,User, OrderDetail,OrderItem,Cart,User_Info
-from seeds.animal_s import Animals, TypeOfAnimals, BreedOfAnimals, Users,Carts, UserInfos
+from methods.animal_s import Animals, TypeOfAnimals, BreedOfAnimals, Users,Carts, UserInfos
 
 
 
