@@ -11,15 +11,6 @@ from seeds.animal_s import Animals, TypeOfAnimals, BreedOfAnimals, Users,Carts, 
 
 
 
-
-
-
-
-
-
-
-
-
 class AnimalProduce(Resource):
     @jwt_required()
     def get_animals():
@@ -64,7 +55,7 @@ class AnimalProducById(Resource):
             return make_response({"msg": "Invalid id"}, 400)
         
 
-class AllTypesOfAnimal():
+class AllTypesOfAnimal(Resource):
     @jwt_required()
     def get_all_types():
         animal_type = TypeOfAnimals()
@@ -249,6 +240,6 @@ api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(AcessToken, '/get-access-token', endpoint='get-access-token')
 api.add_resource(AnimalProduce, '/animals', endpoint='animals')
-api.add_resource(AnimalProducById, '/animals/<int: id>', endpoint='/animals/<int: id>')
+api.add_resource(AnimalProducById, '/animals/<int:id>', endpoint='/animals/<int: id>')
 api.add_resource(AllTypesOfAnimal, '/animals/types', endpoint='animals/types')
 api.add_resource(AnimalProduce, '/animals/breeds', endpoint='animals/breeds')

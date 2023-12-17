@@ -1,9 +1,9 @@
 import base64
 from datetime import datetime 
-from config import db, app, bcrypt
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy_serializer import SerializerMixin
-from server.config import db, app
+
+from config import db, app, bcrypt
 
 
 
@@ -13,8 +13,8 @@ class TypeOfAnimal(db.Model):
 
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     type_name = db.Column('type_name', db.String(255), nullable = False)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable = False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable = False)
+    created_at = db.Column('created_at', db.DateTime,  nullable = False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable = False)
 
     def as_dict(self):
         return {
@@ -32,8 +32,8 @@ class BreedofAnimal(db.Model):
     breed_description = db.Column('breed_description', db.Text, nullable=False)
     type_id = db.Column('type_id', db.ForeignKey(TypeOfAnimal.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
 
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable= False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable= False)
+    created_at = db.Column('created_at', db.DateTime, nullable= False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable= False)
 
     def as_dict(self):
         return {
@@ -49,8 +49,8 @@ class AnimalInventory(db.Model):
     
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     inventory_quantity = db.Column('inventory_quantity', db.Integer, nullable=True)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = db.Column('created_at', db.DateTime,  nullable=False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable=False)
 
     def as_dict(self):
         return {
@@ -69,8 +69,8 @@ class Animal(db.Model):
     type_id = db.Column('type_id', db.ForeignKey(TypeOfAnimal.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     breed_id = db.Column('breed_id', db.ForeignKey(BreedofAnimal.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     inventory_id= db.Column('inventory_id', db.ForeignKey(AnimalInventory.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = db.Column('created_at', db.DateTime,  nullable=False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable=False)
 
     def as_dict(self):
         return {
@@ -83,11 +83,11 @@ class Animal(db.Model):
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    id = db.Column('user_id', db.Integer, primary_key=True, autoincrement= True)
+    id = db.Column('id', db.Integer, primary_key=True, autoincrement= True)
     email = db.Column('email', db.String(250), nullable = False, unique = True)
     _password = db.Column('_password', db.String(250))
-    created_at = db.Column('created_at', db.DateTime, default= datetime.datetime.utcnow, nullable= False)
-    updated_at = db.Column('updated_at', db.DateTime, default= datetime.datetime.utcnow, nullable= False)
+    created_at = db.Column('created_at', db.DateTime, nullable= False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable= False)
 
 
     @hybrid_property
@@ -113,15 +113,15 @@ class User(db.Model, SerializerMixin):
 class User_Info(db.Model):
     __tablename__ = 'users_info'
 
-    id = db.Column('user_id', db.Integer, primary_key = True, autoincrement = True)
+    id = db.Column('id', db.Integer, primary_key = True, autoincrement = True)
     first_name = db.Column('first_name', db.String(255), nullable= False)
     last_name = db.Column('last_name', db.String(255), nullable= False)
     email = db.Column('email', db.String(255), nullable= False)
     phone_number =  db.Column('phone_number', db.String(255), nullable= False)
     user_id = db.Column('user_id', db.ForeignKey(
        User.id, ondelete='CASCADE', onupdate='CASCADE'), nullable= False, unique=True)
-    created_at = db.Column('created_at', db.Datetime, default = datetime.datetime.utcnow, nullable = False )
-    updated_at = db.Column('updated_at', db.Datetime, default = datetime.datetime.utcnow, nullable = False )
+    created_at = db.Column('created_at', db.DateTime,  nullable = False )
+    updated_at = db.Column('updated_at', db.DateTime, nullable = False )
 
 
     def as_dict(self):
@@ -134,8 +134,7 @@ class User_Info(db.Model):
 
 
 
-    with app.app_context():
-     db.create_all()
+    
 
 class OrderDetail(db.Model):
     __tablename__ = 'order_detail'
@@ -143,8 +142,8 @@ class OrderDetail(db.Model):
     id = db.Column('id', db.Integer, primary_key=True, autoincrement=True)
     user_id = db.Column('user_id', db.ForeignKey(User_Info.user_id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     total = db.Column('total', db.Integer, nullable=False)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = db.Column('created_at', db.DateTime,  nullable=False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable=False)
 
     def as_dict(self):
         return {
@@ -160,8 +159,8 @@ class OrderItem(db.Model):
     order_detail_id = db.Column('order_detail_id', db.ForeignKey(OrderDetail.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     animal_id = db.Column('animal_id', db.ForeignKey(Animal.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     quantity = db.Column('quantity', db.Integer, nullable=False)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = db.Column('created_at', db.DateTime, nullable=False)
+    updated_at = db.Column('updated_at', db.DateTime, nullable=False)
 
     def as_dict(self):
         return {
@@ -177,8 +176,8 @@ class Cart(db.Model):
     quantity = db.Column('quantity', db.Integer, nullable=False)
     user_id = db.Column('user_id', db.ForeignKey(User_Info.user_id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
     animal_id = db.Column('animal_id', db.ForeignKey(Animal.id, ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
-    created_at = db.Column('created_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
-    updated_at = db.Column('updated_at', db.DateTime, default=datetime.datetime.utcnow, nullable=False)
+    created_at = db.Column('created_at', db.DateTime,  nullable=False)
+    updated_at = db.Column('updated_at', db.DateTime,  nullable=False)
 
     def as_dict(self):
         return {
@@ -186,4 +185,7 @@ class Cart(db.Model):
             'quantity': self.quantity,
             'animalId': self.animal_id
         }
+    
+    with app.app_context():
+        db.create_all()
     
