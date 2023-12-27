@@ -20,7 +20,7 @@ class AnimalProduce(Resource):
         if type:
             animal_type = TypeOfAnimals()
             try:
-                type_id = animal_type.get_animal_id_based_type(type)
+                type_id = animal_type.get_type_id_based_type(type)
                 data = animal_s.get_all_animals_based_on_types_of_animal(type_id)
                 if len(data) !=0:
                     return make_response({"products": data}, 200)
@@ -40,7 +40,6 @@ class AnimalProduce(Resource):
             except AttributeError: 
                 return make_response({"msg": "No animals found for given breed"}, 400)
             
-
 class AnimalProducById(Resource):
     @jwt_required()
     def get(id):
@@ -54,7 +53,6 @@ class AnimalProducById(Resource):
         except TypeError:
             return make_response({"msg": "Invalid id"}, 400)
         
-
 class AllTypesOfAnimal(Resource):
     @jwt_required()
     def get():
@@ -228,15 +226,20 @@ class UpdatePassword(Resource):
 
 
 
-api.add_resource(User_Profile, '/profile', endpoint='/profile')
-api.add_resource(UpdatePassword, '/update-password', endpoint='/update-password')           
-api.add_resource(Home, '/', endpoint='/')
-api.add_resource(BreedsIndex, '/breeds', endpoint='/breeds')          
-api.add_resource(User_Cart,'/cart', endpoint='/cart')
-api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(AcessToken, '/get-access-token', endpoint='get-access-token')
 api.add_resource(AnimalProduce, '/animals', endpoint='animals')
 api.add_resource(AnimalProducById, '/animals/<int:id>', endpoint='/animals/<int: id>')
 api.add_resource(AllTypesOfAnimal, '/animals/types', endpoint='animals/types')
-api.add_resource(AnimalProduce, '/animals/breeds', endpoint='animals/breeds')
+api.add_resource(AllBreedOfAnimal, '/animals/breeds', endpoint='animals/breeds')
+api.add_resource(Signup, '/signup', endpoint='signup')
+api.add_resource(AcessToken, '/get-access-token', endpoint='get-access-token')
+api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(User_Cart,'/cart', endpoint='/cart')
+api.add_resource(Home, '/', endpoint='/')
+api.add_resource(BreedsIndex, '/breeds', endpoint='/breeds')  
+api.add_resource(User_Profile, '/profile', endpoint='/profile')    
+api.add_resource(UpdatePassword, '/update-password', endpoint='/update-password')           
+
+    
+
+
+
