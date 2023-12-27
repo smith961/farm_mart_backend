@@ -63,7 +63,7 @@ class AllTypesOfAnimal(Resource):
         else:
             return make_response({"msg": "No types found"}, 400)
 
-class AllBreedOfAnimal():
+class AllBreedOfAnimal(Resource):
     @jwt_required()
     def get():
         animal_type = TypeOfAnimals()
@@ -235,7 +235,7 @@ api.add_resource(AcessToken, '/get-access-token', endpoint='get-access-token')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(User_Cart,'/cart', endpoint='/cart')
 api.add_resource(Home, '/', endpoint='/')
-api.add_resource(BreedsIndex, '/breeds', endpoint='/breeds')  
+api.add_resource(BreedsIndex, '/breed', endpoint='/breed')  
 api.add_resource(User_Profile, '/profile', endpoint='/profile')    
 api.add_resource(UpdatePassword, '/update-password', endpoint='/update-password')           
 

@@ -10,7 +10,7 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__)
 app.secret_key = 'secret key'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URI")
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://smith:xQUCDiASx0OUaUy2yyV9of7bnWfuZOFS@dpg-clv06q5a73kc73blh9t0-a.oregon-postgres.render.com/farmmart'
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = False
 
 

@@ -30,9 +30,7 @@ class TypeOfAnimals():
             types_data.append(data_dict)
         return types_data
     
-    def get_breed_based_type_of_animal(self, type_id):
-        breeds = BreedOfAnimals.query.filter_by(type_id = type_id).all()
-        return [breed.as_dict() for breed in breeds]
+    
 
     
 class BreedOfAnimals():
